@@ -1,0 +1,12 @@
+faiss_cpu
+gdown
+numpy
+opencv_python
+Pillow
+scikit_learn
+scipy
+skimage
+torch
+torchmetrics
+torchvision
+tqdm
