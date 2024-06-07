@@ -11,7 +11,29 @@ MeshVPR localizes real-world query images by doing VPR on a synthetic database o
   <img src="https://github.com/gmberton/gmberton.github.io/blob/96db6aa36b20d3a07f03e889ef82ec74370991cf/assets/MeshVPR/sf_short_02.gif" width="40%" />
 </p>
 
-## Setup
+## Quick Setup
+
+You can start using MeshVPR by running these commands
+```
+git clone https://github.com/gmberton/MeshVPR
+cd meshvpr
+
+mkdir data && cd data
+# Download 100k images for training
+rsync -rhz --info=progress2 --ignore-existing rsync://vandaldata.polito.it/sf_xl/mesh_vpr_datasets/train_set_hq_100000 .
+mkdir test_sets && cd test_sets
+# Download val set and Melbourne test set
+rsync -rhz --info=progress2 --ignore-existing rsync://vandaldata.polito.it/sf_xl/mesh_vpr_datasets/test_sets/val_set .
+rsync -rhz --info=progress2 --ignore-existing rsync://vandaldata.polito.it/sf_xl/mesh_vpr_datasets/test_sets/synt_melbourne .
+
+python train.py \
+    --real_train_dir data/train_set_hq_100000/real_database \
+    --synt_train_dir data/train_set_hq_100000/synt_database \
+    --test_dir data/test_sets \
+    --method cosplace
+```
+
+## Datasets and reproducibility
 
 We provide all datasets to fully replicate our results. See Table 1 of the paper for further information on each dataset. For convenience, the training datasets come already paired (i.e. real and synt sets with precisely matching images).
 
@@ -34,14 +56,3 @@ You can download any subset using `rsync` like this
 for example
 
 `rsync -rhz --info=progress2 --ignore-existing rsync://vandaldata.polito.it/sf_xl/mesh_vpr_datasets/test_sets/synt_berlin .`
-
-## Train
-
-Training is as simple as 
-```
-python train.py
-```
-or you can use `-h` to get a list of the parameters
-```
-python train.py -h
-```
