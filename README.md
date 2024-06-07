@@ -1,6 +1,6 @@
 # MeshVPR: Citywide Visual Place Recognition Using 3D Meshes
 
-Official code for the paper "MeshVPR: Citywide Visual Place Recognition Using 3D Meshes" by Gabriele Berton, Lorenz Junglas, Riccardo Zaccone, Thomas Pollok, Barbara Caputo and Carlo Masone.
+Official code for the paper ["MeshVPR: Citywide Visual Place Recognition Using 3D Meshes"](https://arxiv.org/abs/2406.02776) by Gabriele Berton, Lorenz Junglas, Riccardo Zaccone, Thomas Pollok, Barbara Caputo and Carlo Masone.
 
 MeshVPR localizes real-world query images by doing VPR on a synthetic database of images, obtained from a 3D mesh of a city.
 
