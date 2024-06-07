@@ -1,6 +1,6 @@
 # MeshVPR: Citywide Visual Place Recognition Using 3D Meshes
 
-Official code for the paper "MeshVPR: Citywide Visual Place Recognition Using 3D Meshes" by Gabriele Berton, Lorenz Junglas, Riccardo Zaccone, Thomas Pollok, Barbara Caputo and Carlo Masone.
+Official code for the paper ["MeshVPR: Citywide Visual Place Recognition Using 3D Meshes"](https://arxiv.org/abs/2406.02776) by Gabriele Berton, Lorenz Junglas, Riccardo Zaccone, Thomas Pollok, Barbara Caputo and Carlo Masone.
 
 MeshVPR localizes real-world query images by doing VPR on a synthetic database of images, obtained from a 3D mesh of a city.
 
@@ -16,7 +16,7 @@ MeshVPR localizes real-world query images by doing VPR on a synthetic database o
 You can start using MeshVPR by running these commands
 ```
 git clone https://github.com/gmberton/MeshVPR
-cd meshvpr
+cd MeshVPR
 
 mkdir data && cd data
 # Download 100k images for training
@@ -25,6 +25,8 @@ mkdir test_sets && cd test_sets
 # Download val set and Melbourne test set
 rsync -rhz --info=progress2 --ignore-existing rsync://vandaldata.polito.it/sf_xl/mesh_vpr_datasets/test_sets/val_set .
 rsync -rhz --info=progress2 --ignore-existing rsync://vandaldata.polito.it/sf_xl/mesh_vpr_datasets/test_sets/synt_melbourne .
+
+cd ../..
 
 python train.py \
     --real_train_dir data/train_set_hq_100000/real_database \
