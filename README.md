@@ -18,7 +18,7 @@ We provide all datasets to fully replicate our results. See Table 1 of the paper
 | Type  |   Name    | Size  | Directory                |
 | ----- | -------   |------ |------                    |
 | Test  | Berlin    | 41 GB | test_sets/synt_berlin    |
-| Test  | Paris     | 45 GB | test_sets/synt_melbourne |
+| Test  | Paris     | 45 GB | test_sets/synt_paris     |
 | Test  |Melbourne  | 11 GB | test_sets/synt_melbourne |
 | Test  | Val       | 4.1 GB| test_sets/val_set        |
 | Train | SF-HQ     | 670 GB| train_set_hq         |
