@@ -1,8 +1,10 @@
 
+import os
 import sys
 import torch
 import logging
 import torchmetrics
+from glob import glob
 from tqdm import tqdm
 from datetime import datetime
 
@@ -47,6 +49,9 @@ val_ds = TestDataset(
     dataset_dir=args.test_dir,
     dataset_name="val_set",
 )
+
+test_sets_names = [os.path.basename(n) for n in sorted(glob(args.test_dir + "/*"))]
+logging.info(f"Found {len(test_sets_names)} test sets, namely {test_sets_names}")
 
 criterion = torch.nn.MSELoss()
 optim = torch.optim.Adam(params=synt_model.parameters(), lr=args.lr)
@@ -97,7 +102,7 @@ for num_epoch in range(args.num_epochs):
 
 logging.info(f"Trained for {num_epoch+1:02d} epochs, in total in {str(datetime.now() - start_time)[:-7]}")
 
-for dataset_name in ["synt_berlin", "synt_paris", "synt_melbourne"]:
+for dataset_name in test_sets_names:
     test_dataset = TestDataset(
         dataset_dir=args.test_dir,
         dataset_name=dataset_name,
@@ -109,4 +114,3 @@ for dataset_name in ["synt_berlin", "synt_paris", "synt_melbourne"]:
     logging.info(f"{test_dataset}: {recalls_str[100]}")
 
 logging.info(f"Experiment finished (without any errors), in total in {str(datetime.now() - start_time)[:-7]}")
-
