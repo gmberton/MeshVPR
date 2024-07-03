@@ -1,12 +1,15 @@
-
 import sys
 import logging
 import traceback
 from pathlib import Path
 
 
-def setup_logging(log_dir: Path, stdout: str = "debug", info_filename: str = "info.log",
-                  debug_filename: str = "debug.log"):
+def setup_logging(
+    log_dir: Path,
+    stdout: str = "debug",
+    info_filename: str = "info.log",
+    debug_filename: str = "debug.log",
+):
     """After calling this function, you can easily log messages from anywhere
     in your code without passing any object to your functions.
     Just calling "logging.info(msg)" prints "msg" in stdout and saves it in
@@ -28,13 +31,15 @@ def setup_logging(log_dir: Path, stdout: str = "debug", info_filename: str = "in
     """
     log_dir.mkdir(parents=True)
     # logging.Logger.manager.loggerDict.keys() to check which loggers are in use
-    logging.getLogger('matplotlib.font_manager').disabled = True
-    logging.getLogger('shapely').disabled = True
-    logging.getLogger('shapely.geometry').disabled = True
-    base_formatter = logging.Formatter('%(asctime)s   %(message)s', "%Y-%m-%d %H:%M:%S")
-    logger = logging.getLogger('')
+    logging.getLogger("matplotlib.font_manager").disabled = True
+    logging.getLogger("shapely").disabled = True
+    logging.getLogger("shapely.geometry").disabled = True
+    base_formatter = logging.Formatter("%(asctime)s   %(message)s", "%Y-%m-%d %H:%M:%S")
+    logger = logging.getLogger("")
     logger.setLevel(logging.DEBUG)
-    logging.getLogger('PIL').setLevel(logging.INFO)  # turn off logging tag for some images
+    logging.getLogger("PIL").setLevel(
+        logging.INFO
+    )  # turn off logging tag for some images
 
     if info_filename is not None:
         info_file_handler = logging.FileHandler(log_dir / info_filename)
