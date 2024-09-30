@@ -74,6 +74,8 @@ You can download our best model, namely our fine-tuned SALAD, like this.
 
 Note that this is the model that takes synthetic images as input, while the one that takes the real images (queries) is the standard pretrained SALAD, which can be downloaded using the script in `vpr_models/salad.py`
 
+### Slides
+[LINK](https://docs.google.com/presentation/d/1hU5yKKoD8lJDIiYC_Sy2ZYQKwSslRY-AcOElQrUutsM/edit?usp=sharing)
 
 ## Cite
 
