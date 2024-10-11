@@ -52,7 +52,6 @@ def parse_arguments():
     parser.add_argument(
         "--device", type=str, default="cuda", choices=["cuda", "cpu"], help="_"
     )
-    parser.add_argument("--seed", type=int, default=0, help="_")
     parser.add_argument("--num_workers", type=int, default=8, help="_")
     parser.add_argument(
         "--num_preds_to_save",
