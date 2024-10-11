@@ -5,7 +5,7 @@ opencv_python
 Pillow
 scikit_learn
 scipy
-skimage
+scikit-image
 torch
 torchmetrics
 torchvision
