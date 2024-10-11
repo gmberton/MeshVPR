@@ -58,7 +58,6 @@ optim = torch.optim.Adam(params=synt_model.parameters(), lr=args.lr)
 best_val_recall1 = 0
 num_epoch = 0
 
-scaler = torch.cuda.amp.GradScaler()
 for num_epoch in range(args.num_epochs):
     epoch_start_time = datetime.now()
     real_model = real_model.eval()
@@ -77,15 +76,14 @@ for num_epoch in range(args.num_epochs):
         if n_iter >= args.iterations_per_epoch:
             break
 
-        with torch.cuda.amp.autocast():
+        with torch.autocast(args.device):
             with torch.inference_mode():
                 real_descs = real_model(real_images.to(args.device))
             synt_descs = synt_model(synt_images.to(args.device))
             loss = criterion(real_descs.clone(), synt_descs)
 
-        scaler.scale(loss).backward()
-        scaler.step(optim)
-        scaler.update()
+        loss.backward()
+        optim.step()
         optim.zero_grad()
 
         epoch_losses.update(loss.item())
