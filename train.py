@@ -1,16 +1,15 @@
 import os
 import sys
 import torch
-import logging
 import torchmetrics
 from glob import glob
 from tqdm import tqdm
+from loguru import logger
 from datetime import datetime
 
 import test
 import util
 import parser
-import commons
 import vpr_models
 from datasets.test_dataset import TestDataset
 from datasets.train_dataset import TrainDataset
@@ -20,16 +19,18 @@ torch.backends.cudnn.benchmark = True  # Provides a speedup
 args = parser.parse_arguments()
 start_time = datetime.now()
 args.log_dir = args.log_dir / start_time.strftime("%Y-%m-%d_%H-%M-%S")
-commons.setup_logging(args.log_dir, stdout="info")
-logging.info(" ".join(sys.argv))
-logging.info(f"Arguments: {args}")
-logging.info(f"The outputs are being saved in {args.log_dir}")
+logger.add(sys.stdout, colorize=True, format="<green>{time:%Y-%m-%d %H:%M:%S}</green> {message}", level="INFO")
+logger.add(args.log_dir / "debug.log", level="DEBUG")
+logger.add(args.log_dir / "info.log", level="INFO")
+logger.info(" ".join(sys.argv))
+logger.info(f"Arguments: {args}")
+logger.info(f"The outputs are being saved in {args.log_dir}")
 
 #### MODELS
 real_model = vpr_models.get_model(args.method).to(args.device)
 synt_model = vpr_models.get_model(args.method).to(args.device)
 if args.resume_model is not None:
-    logging.info(f"Loading model from {args.resume_model}")
+    logger.info(f"Loading model from {args.resume_model}")
     model_state_dict = torch.load(args.resume_model)
     synt_model.load_state_dict(model_state_dict)
 
@@ -50,7 +51,7 @@ val_ds = TestDataset(
 )
 
 test_sets_names = [os.path.basename(n) for n in sorted(glob(args.test_dir + "/*"))]
-logging.info(f"Found {len(test_sets_names)} test sets, namely {test_sets_names}")
+logger.info(f"Found {len(test_sets_names)} test sets, namely {test_sets_names}")
 
 criterion = torch.nn.MSELoss()
 optim = torch.optim.Adam(params=synt_model.parameters(), lr=args.lr)
@@ -93,7 +94,7 @@ for num_epoch in range(args.num_epochs):
     recalls, recalls_str = test.test(
         args, val_ds, real_model, synt_model, positive_dist_threshold=[100]
     )
-    logging.info(
+    logger.info(
         f"Epoch {num_epoch:02d} in {str(datetime.now() - epoch_start_time)[:-7]}, "
         f"loss = {cur_mean_loss:.10f}, {val_ds}: {recalls_str[100][:20]}"
     )
@@ -113,7 +114,7 @@ for num_epoch in range(args.num_epochs):
         args.log_dir,
     )
 
-logging.info(
+logger.info(
     f"Trained for {num_epoch+1:02d} epochs, in total in {str(datetime.now() - start_time)[:-7]}"
 )
 
@@ -131,8 +132,8 @@ for dataset_name in test_sets_names:
         preds_folder_name=test_dataset.dataset_name,
         positive_dist_threshold=[100],
     )
-    logging.info(f"{test_dataset}: {recalls_str[100]}")
+    logger.info(f"{test_dataset}: {recalls_str[100]}")
 
-logging.info(
+logger.info(
     f"Experiment finished (without any errors), in total in {str(datetime.now() - start_time)[:-7]}"
 )

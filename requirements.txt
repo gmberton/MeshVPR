@@ -1,11 +1,12 @@
 faiss_cpu
 gdown
+loguru
 numpy
 opencv_python
 Pillow
+scikit-image
 scikit_learn
 scipy
-scikit-image
 torch
 torchmetrics
 torchvision

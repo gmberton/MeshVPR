@@ -1,6 +1,6 @@
 import os
-import logging
 from glob import glob
+from loguru import logger
 from PIL import ImageFile
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -28,7 +28,7 @@ def read_images_paths(dataset_folder, get_abs_path=False):
 
     file_with_paths = dataset_folder + "_images_paths.txt"
     if os.path.exists(file_with_paths):
-        logging.debug(
+        logger.debug(
             f"Reading paths of images within {dataset_folder} from {file_with_paths}"
         )
         with open(file_with_paths, "r") as file:
@@ -42,7 +42,7 @@ def read_images_paths(dataset_folder, get_abs_path=False):
                 f"that the content of {file_with_paths} is wrong."
             )
     else:
-        logging.debug(f"Searching images in {dataset_folder} with glob()")
+        logger.debug(f"Searching images in {dataset_folder} with glob()")
         images_paths = sorted(glob(f"{dataset_folder}/**/*.jpg", recursive=True))
         if len(images_paths) == 0:
             raise FileNotFoundError(

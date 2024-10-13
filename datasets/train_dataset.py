@@ -1,8 +1,8 @@
 import os
 import torch
-import logging
 from tqdm import tqdm
 from PIL import Image
+from loguru import logger
 import torchvision.transforms as tfm
 
 import datasets.dataset_utils as dataset_utils
@@ -25,7 +25,7 @@ class TrainDataset(torch.utils.data.Dataset):
         self.real_dir = real_dir
         self.synt_dir = synt_dir
         self.synt_paths = dataset_utils.read_images_paths(synt_dir, get_abs_path=False)
-        logging.info(f"All synthetic images: {len(self.synt_paths)}")
+        logger.info(f"All synthetic images: {len(self.synt_paths)}")
 
         if train_on_southern_half:
             # Keep only images with latitude < CUTOFF (lat is the 5th field within the filename separated by @)
@@ -34,7 +34,7 @@ class TrainDataset(torch.utils.data.Dataset):
                 for p in tqdm(self.synt_paths)
                 if float(p.split("@")[5]) < CUTOFF_LATITUDE
             ]
-            logging.info(
+            logger.info(
                 f"Synthetic images in southern half of SF:  {len(self.synt_paths)}"
             )
 

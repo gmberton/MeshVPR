@@ -1,11 +1,10 @@
 import sys
 import torch
-import logging
+from loguru import logger
 from datetime import datetime
 
 import test
 import parser
-import commons
 import vpr_models
 from datasets.test_dataset import TestDataset
 
@@ -16,21 +15,23 @@ THRESHOLDS = [10, 25, 50, 100, 200, 500, 1000]
 args = parser.parse_arguments(is_training=False)
 start_time = datetime.now()
 args.log_dir = args.log_dir / start_time.strftime("%Y-%m-%d_%H-%M-%S")
-commons.setup_logging(args.log_dir, stdout="info")
-logging.info(" ".join(sys.argv))
-logging.info(f"Arguments: {args}")
-logging.info(f"The outputs are being saved in {args.log_dir}")
+logger.add(sys.stdout, colorize=True, format="<green>{time:%Y-%m-%d %H:%M:%S}</green> {message}", level="INFO")
+logger.add(args.log_dir / "debug.log", level="DEBUG")
+logger.add(args.log_dir / "info.log", level="INFO")
+logger.info(" ".join(sys.argv))
+logger.info(f"Arguments: {args}")
+logger.info(f"The outputs are being saved in {args.log_dir}")
 
 #### MODELS
 real_model = vpr_models.get_model(args.method).to(args.device)
 synt_model = vpr_models.get_model(args.method).to(args.device)
 
 if args.resume_model is not None:
-    logging.info(f"Loading model from {args.resume_model}")
+    logger.info(f"Loading model from {args.resume_model}")
     model_state_dict = torch.load(args.resume_model)
     synt_model.load_state_dict(model_state_dict)
 else:
-    logging.info(
+    logger.info(
         "WARNING: You didn't provide a path to resume the model (--resume_model parameter). "
         + "Evaluation will be computed using randomly initialized weights."
     )
@@ -50,10 +51,10 @@ for dataset_name in ["synt_berlin", "synt_paris", "synt_melbourne"]:
         positive_dist_threshold=THRESHOLDS,
     )
     for threshold in THRESHOLDS:
-        logging.info(
+        logger.info(
             f"{test_dataset} thresh={threshold: >4}: {all_recalls_str[threshold]}"
         )
 
-logging.info(
+logger.info(
     f"Experiment finished (without any errors), in total in {str(datetime.now() - start_time)[:-7]}"
 )

@@ -1,9 +1,9 @@
 import faiss
 import torch
-import logging
 import numpy as np
 from tqdm import tqdm
 from typing import Tuple
+from loguru import logger
 from argparse import Namespace
 from torch.utils.data.dataset import Subset
 from torch.utils.data import DataLoader, Dataset
@@ -31,7 +31,7 @@ def test(
     faiss_index = faiss.IndexFlatL2(real_model.desc_dim)
 
     with torch.no_grad():
-        logging.debug("Extracting database descriptors for evaluation/testing")
+        logger.debug("Extracting database descriptors for evaluation/testing")
         database_subset_ds = Subset(eval_ds, list(range(eval_ds.num_db)))
         database_dataloader = DataLoader(
             dataset=database_subset_ds,
@@ -42,7 +42,7 @@ def test(
             descriptors = synt_model(db_images.to(args.device))
             faiss_index.add(descriptors.cpu().numpy())
 
-        logging.debug(
+        logger.debug(
             "Extracting queries descriptors for evaluation/testing using batch size 1"
         )
         queries_subset_ds = Subset(
@@ -58,7 +58,7 @@ def test(
             queries_descriptors.append(descriptors)
         queries_descriptors = np.concatenate(queries_descriptors)
 
-    logging.debug("Calculating recalls")
+    logger.debug("Calculating recalls")
     _, predictions = faiss_index.search(queries_descriptors, max(RECALL_VALUES))
 
     #### For each query, check if the predictions are correct
