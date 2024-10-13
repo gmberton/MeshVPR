@@ -12,10 +12,18 @@ def get_model(method):
     elif method == "netvlad":
         model = netvlad.NetVLAD()
         model.desc_dim = 4096
-    elif method == "cosplace":
+    elif method == "cosplace-r50-2048":
         model = torch.hub.load("gmberton/cosplace", "get_trained_model",
                                backbone="ResNet50", fc_output_dim=2048)
         model.desc_dim = 2048
+    elif method == "cosplace-r50-512":
+        model = torch.hub.load("gmberton/cosplace", "get_trained_model",
+                               backbone="ResNet50", fc_output_dim=512)
+        model.desc_dim = 512
+    elif method == "cosplace-r18-512":
+        model = torch.hub.load("gmberton/cosplace", "get_trained_model",
+                               backbone="ResNet18", fc_output_dim=512)
+        model.desc_dim = 512
     elif method == "mixvpr":
         model = mixvpr.get_mixvpr(descriptors_dimension=4096)
         model.desc_dim = 4096

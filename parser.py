@@ -14,7 +14,9 @@ def parse_arguments():
         choices=[
             "netvlad",
             "sfrs",
-            "cosplace",
+            "cosplace-r50-512",
+            "cosplace-r50-2048",
+            "cosplace-r18-512",
             "convap",
             "mixvpr",
             "eigenplaces",
