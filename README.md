@@ -74,6 +74,13 @@ You can download our best model, namely our fine-tuned SALAD, like this.
 
 Note that this is the model that takes synthetic images as input, while the one that takes the real images (queries) is the standard pretrained SALAD, which can be downloaded using the script in `vpr_models/salad.py`
 
+Upon request, we recently trained a lightweight model, based on CosPlace with a ResNet18 with descriptors' dimension 512, which is not included on the paper, and is more suitable for embedded small-scale MeshVPR. You can download the weights like this.
+
+`rsync -rhz --info=progress2 --ignore-existing rsync://vandaldata.polito.it/sf_xl/mesh_vpr_datasets/models/ResNet18-512/best_model.pth .`
+
+
+
+
 ### Slides
 [LINK](https://docs.google.com/presentation/d/1hU5yKKoD8lJDIiYC_Sy2ZYQKwSslRY-AcOElQrUutsM/edit?usp=sharing)
 
