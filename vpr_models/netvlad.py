@@ -42,7 +42,7 @@ class NetVLADLayer(nn.Module):
 
 class NetVLAD(torch.nn.Module):
     
-    def __init__(self, descriptors_dimension):
+    def __init__(self, descriptors_dimension=4096):
         super().__init__()
         assert descriptors_dimension in [4096, 32768]
         whiten = descriptors_dimension == 4096

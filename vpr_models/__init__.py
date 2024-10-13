@@ -10,7 +10,7 @@ def get_model(method):
         model = sfrs.SFRSModel()
         model.desc_dim = 4096
     elif method == "netvlad":
-        model = netvlad.NetVLAD(descriptors_dimension=desc_dim)
+        model = netvlad.NetVLAD()
         model.desc_dim = 4096
     elif method == "cosplace":
         model = torch.hub.load("gmberton/cosplace", "get_trained_model",
