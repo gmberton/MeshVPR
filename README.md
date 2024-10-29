@@ -88,10 +88,10 @@ Upon request, we recently trained a lightweight model, based on CosPlace with a 
 
 Here is the bibtex to cite our paper
 ```
-@InProceedings{Berton_ECCV_2024_MeshVPR,
-    author    = {Gabriele Berton, Lorenz Junglas, Riccardo Zaccone, Thomas Pollok, Barbara Caputo, Carlo Masone},
+@inproceedings{Berton_ECCV_2024_MeshVPR,
+    author    = {Berton, Gabriele and Junglas, Lorenz and Zaccone, Riccardo and Pollok, Thomas and Caputo, Barbara and Masone, Carlo},
     title     = {MeshVPR: Citywide Visual Place Recognition Using 3D Meshes},
-    booktitle = {European Conference on Computer Vision (ECCV)},
     year      = {2024},
+    booktitle = {European Conference on Computer Vision (ECCV)},
 }
 ```
